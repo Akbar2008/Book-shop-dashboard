@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useContext } from "react";
 import { Context } from "../App";
-import { Card } from "../components/assets/Cards/Card";
+import { Card } from "../components/shared/Cards/Card";
 
 export const Home = () => {
   const { data } = useContext(Context);
