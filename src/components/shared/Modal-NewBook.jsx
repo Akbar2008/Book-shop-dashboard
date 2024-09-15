@@ -2,27 +2,27 @@ import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import { PiLessThanOrEqualDuotone } from "react-icons/pi";
 import { Context } from "../../App";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import axios from "axios";
 
 export const ModalNewBook = () => {
-    const { NewBook, setNewBook } = useContext(Context);
-    const [dataInfo, setDataInfo] = useState();
+    const { NewBook, setNewBook, Fetch } = useContext(Context);
+    const [addBook, setAddBook] = useState();
     
     const {
         register,
         formState: { errors },
         handleSubmit,
     } = useForm();
-    const onSubmit = (data) => setDataInfo(data);
+    const onSubmit = (data) => {
+        setAddBook(data);
+        axios.post('book', data).then().catch((error) => {console.log(error)}).finally(()=>{Fetch()});
+    }
     const BtnRef = useRef();
-    // useEffect(() => {
-    //     axios.post('https://66d1a89362816af9a4f47003.mockapi.io/items', dataInfo);
-    //   }, []);
 
     return (
-        <section className={NewBook ? "flex items-center fixed w-full h-screen bg-[rgba(0,0,0,0.3)] z-10 top-0 left-0" : "hidden"}>
-            <div className="m-auto w-[400px] max-h-[700px] bg-black rounded-2xl p-7">
+        <section className={NewBook ? "flex items-center fixed w-full h-screen bg-[rgba(0,0,0,0.3)] z-50 top-0 left-0 our" : "hidden"}>
+            <div className="m-auto w-[400px] max-h-[790px] bg-black rounded-2xl p-7">
                 <p className="text-right font-bold text-white text-2xl cursor-pointer mb-2" onClick={() => { setNewBook(false) }}>X</p>
                 <div className="text-white font-bold flex gap-2 items-center shadow-2xl shadow-white">
                     <img src="/image/tenor-unscreen.gif" alt="Telegram duck" className="w-14" />
@@ -51,7 +51,15 @@ export const ModalNewBook = () => {
                             <div className={errors.price?.type ? "flex gap-1 text-[red]" : "hidden"}><p className="flex gap-1 items-center">is not found: 5$<PiLessThanOrEqualDuotone /></p>  <img src="/image/Error.png" alt="Error icon" className="h-6" /></div></label>
                         <input type="number" id="price" className="bg-none rounded border-2 border-white outline-none p-3" {...register("price", { required: true, min: 5, })} aria-invalid={errors.price ? "true" : "false"} />
                     </div>
-                    <button  ref={BtnRef} onClick={dataInfo && setNewBook(false)} className="py-3 rounded-xl bg-white bg-[url('../../../public/icon/Cover.svg')] bg-cover bg-center bg-no-repeat text-black">Create</button>
+                    <div className="flex flex-col">
+                    <label htmlFor="select" className={!errors.select?.type ? "mb-3 flex gap-2"  : "mb-3 flex gap-2 text-[red]"}>Status <div className={errors.select?.type ? "flex gap-1 text-[red]" : "hidden"}><p className="flex gap-1 items-center">is not found </p>  <img src="/image/Error.png" alt="Error icon" className="h-6" /></div></label>
+                    <select id="select"  {...register("select", { required: true,  })} aria-invalid={errors.select ? "true" : "false"} className="mb-3 text-white bg-none p-2 border-[1px] border-white rounded-xl">
+                        <option value="" className="bg-none text-black">Select text</option>
+                        <option value="Paid" className="bg-none text-black">Paid</option>
+                        <option value="Draft" className="bg-none text-black">Draft <img src="/image/Error.png" alt="Error icon" className="h-6" /></option>
+                    </select>
+                    </div>
+                    <button ref={BtnRef} onClick={addBook && setNewBook(false)} className="py-3 rounded-xl bg-white bg-[url('../../../public/icon/Cover.svg')] bg-cover bg-center bg-no-repeat text-black">Create</button>
                 </form>
             </div>
         </section>
@@ -60,4 +68,5 @@ export const ModalNewBook = () => {
 ModalNewBook.propTypes = {
     NewBook: PropTypes.bool,
     setNewBook: PropTypes.func,
+    Fetch: PropTypes.func,
 };

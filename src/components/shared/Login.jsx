@@ -35,6 +35,7 @@ export const Login = () => {
                         onSuccess={credentialResponse => {
                             const credentialResponseDecoded = jwtDecode(credentialResponse.credential);
                             setUserData( credentialResponseDecoded);
+                            navigate('/');
                             
                         }}
                         onError={() => {

@@ -3,18 +3,21 @@ import { LuPlus } from "react-icons/lu";
 import { Context } from "../App";
 import { useContext } from "react";
 import { EditCard } from "../components/shared/Cards/EditCard";
+import { useNavigate } from "react-router-dom";
 
 export const Product = () => {
   const { data, setNewBook } = useContext(Context);
-
+  const navigate = useNavigate();
   return (
-    <main className="grid w-full h-[87vh] p-10 grid-cols-[repeat(auto-fill,_minmax(300px,_1fr))] relative gap-10 overflow-auto">
-      <button onClick={() => { setNewBook(true) }} className="absolute p-[15px_25px] rounded-xl bg-green-600 text-white font-bold flex items-center gap-2 top-7 right-5 shadow-lg"><LuPlus /> New Add Books
+    <main className={data.length < 1 ? "-full h-[87vh] flex items-center" : "grid w-full h-[87vh] p-10 grid-cols-[repeat(auto-fill,_minmax(300px,_1fr))] relative gap-10 overflow-auto" }>
+      <button onClick={() => {localStorage.getItem('token') != "undefined" ? setNewBook(true) : navigate('/login')}} className="fixed p-[15px_25px] rounded-xl bg-green-600 text-white font-bold flex items-center gap-2 top-28 right-10 shadow-lg z-10"><LuPlus /> New Add Books
       </button>
-      {data.map((items) => {
-        const { id, bookUrl, title, description, price, sales } = items;
+      {data.length < 1 ? 
+      <p className="m-auto font-bold text-4xl text-[red] flex items-center gap-3">The admin has not yet put the books on sale <img src="/image/sad.png" alt="sad" /></p> :
+      data.map((items) => {
+        const { id, url, title, description, price, sales, select } = items;
         return (
-          <EditCard key={parseInt(id)} id={parseInt(id)} bookUrl={bookUrl} title={title} description={description} price={price} sales={sales}  />
+          <EditCard key={parseInt(id)} id={parseInt(id)} url={url} title={title} description={description} price={price} sales={sales}  select={select}/>
         )
       })}
     </main>

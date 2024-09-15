@@ -31,6 +31,104 @@ body {
     color:#060c2f;
 }
 
-input, textarea {
+input, textarea, select, option {
     background: none;
 }
+
+.button, .btnDraft{
+    min-width: 8px;
+    min-height: 8px;
+    display: inline-flex;
+    justify-content: center;
+    background: green;
+    background: linear-gradient(
+      90deg,
+      green 0%,
+      green 100%
+    );
+    border: none;
+    border-radius: 1000px;
+    box-shadow: 12px 12px 24px green;
+    transition: all 0.3s ease-in-out 0s;
+    outline: none;
+    position: relative;
+  }
+  .btnDraft {
+    background: linear-gradient(
+      90deg,
+      gray 0%,
+      gray 100%
+    );
+  }
+  
+  .button::before, .btnDraft::before{
+    content: "";
+    border-radius: 50%;
+    min-width: calc(8px + 12px);
+    min-height: calc(8px + 12px);
+    border: 6px solid green;
+    box-shadow: 0 0 60px green;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all 0.3s ease-in-out 0s;
+  }
+  .btnDraft::before{
+    border: 6px solid gray;
+    box-shadow: 0 0 60px gray;
+  }
+  .button::after, .btnDraft::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 100%;
+    border: 4px solid green;
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: ring 1.5s infinite;
+  }
+  .btnDraft::after {
+    border: 4px solid gray;
+    animation: ringDraft 1.5s infinite;
+  }
+  .button:hover::after,
+  .button:focus::after,
+  .btnDraft:hover::after,
+  .btnDraft:focus::after {
+    animation: none;
+    display: none;
+  }
+  
+  @keyframes ring {
+    0% {
+      width: 8px;
+      height: 8px;
+      opacity: 1;
+    }
+    100% {
+      width: 60px;
+      height: 60px;
+      opacity: 0;
+    }
+  }
+  
+  @keyframes ringDraft {
+    0% {
+      width: 60px;
+      height: 60px;
+      opacity: 0;
+    }
+    
+    100% {
+      width: 8px;
+      height: 8px;
+      opacity: 1;
+    }
+  }
+  
+  
