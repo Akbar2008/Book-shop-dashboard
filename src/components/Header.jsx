@@ -10,7 +10,7 @@ import Order from '../../public/icon/order.svg';
 import { Link } from "react-router-dom";
 
 export const Header = () => {
-  const { UserData, callback, setCallback } = useContext(Context);
+  const { UserData, callback, setCallback, productSold } = useContext(Context);
   const [userSettings, setUserSettings] = useState(false);
 
 
@@ -24,7 +24,7 @@ export const Header = () => {
         <Link to='/order' onClick={() => { setCallback(false) }} className="relative cursor-pointer mr-6">
           <Call className='mr-3' />
           <p className={callback ? "absolute z-10 text-center font-bold -top-8 -right-8  w-28 h-7 bg-blue-50 border-[1px] border-black rounded-2xl" : "hidden"}>
-            sold
+          {productSold} sold
           </p>
           <div className={`absolute  -top-1 right-3 w-3 h-3 bg-[red] rounded-full border-[3px] border-white ${callback ? "" : "hidden"}`} />
         </Link>
@@ -49,4 +49,5 @@ Header.propTypes = {
   UserData: PropTypes.object,
   callback: PropTypes.bool,
   setCallback: PropTypes.func,
+  productSold: PropTypes.number,
 };

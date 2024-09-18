@@ -21,6 +21,7 @@ export function App() {
   const [buyCard, setBuyCard] = useState(false);
   const [data, setData] = useState([]);
   const [getOrder, setGetOrder] = useState([]);
+  const [productSold, setProductSold] = useState();
   const [callback, setCallback] = useState(JSON.parse(localStorage.getItem("callback")) || false)
   const [id, setId] = useState();
   const [dataInfo, setDataInfo] = useState();
@@ -65,7 +66,7 @@ export function App() {
 
 
   return (
-    <Context.Provider value={{ data, NewBook, setNewBook, UserData, setUserData, edit, setEdit, setId, dataInfo, setDataInfo, values, setValues, setData, Fetch, buyCard, setBuyCard, buyApi, setBuyApi, callback, setCallback, getOrder, SoldOrder }}>
+    <Context.Provider value={{ data, NewBook, setNewBook, UserData, setUserData, edit, setEdit, setId, dataInfo, setDataInfo, values, setValues, setData, Fetch, buyCard, setBuyCard, buyApi, setBuyApi, callback, setCallback, getOrder, SoldOrder, productSold, setProductSold }}>
       <ModalNewBook />
       <BuyCard />
       <div className="flex w-screen max-h-screen items-start">

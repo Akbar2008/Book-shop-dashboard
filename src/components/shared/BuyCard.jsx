@@ -8,7 +8,7 @@ import { Context } from '../../App';
 import axios from "axios";
 
 export const BuyCard = () => {
-  const { buyCard, setBuyCard, buyApi, UserData, setCallback, SoldOrder } = useContext(Context);
+  const { buyCard, setBuyCard, buyApi, UserData, setCallback, SoldOrder, setProductSold } = useContext(Context);
   const { buyUrl, buyTitle, buyDescription, buyPrice, buySelect } = buyApi;
   const [count, setCount] = useState(1);
   const result = count * parseInt(buyPrice);
@@ -36,7 +36,7 @@ export const BuyCard = () => {
           </div>
           <h1>{result?.toFixed(2)} $</h1>
         </div>
-        <div className='px-14' onClick={() => { setBuyCard(false) }}>
+        <div className='px-14' onClick={() => { setBuyCard(false), setProductSold(count) }}>
           <button onClick={() => {
             setCallback(true), OrderPost()
           }}
@@ -56,4 +56,5 @@ BuyCard.propTypes = {
   UserData: PropTypes.object,
   setCallback: PropTypes.func,
   SoldOrder: PropTypes.func,
+  setProductSold: PropTypes.func,
 };

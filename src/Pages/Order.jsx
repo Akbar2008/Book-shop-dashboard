@@ -54,7 +54,7 @@ export const Order = () => {
                   <img src={userPicture} alt="" className="w-11 rounded-full" />
                   <p>{userEmail}</p>
                 </div>
-                <p className="m-auto font-bold mr-3">{price} $</p>
+                <p className={`m-auto font-bold mr-3 ${ userEmail.length > 33 ? "mr-0" : ""}`}>{price} $</p>
                 <p className="m-auto">{months[data.slice(6, 8)] + " " + data.slice(9, 11) + " " + data.slice(1, 5)}</p>
                 <p className={`m-auto font-bold ${select == "Paid" ? "text-[green]" : "text-[gray]"}`}><button className={`${select == "Paid" ? "button" : "btnDraft"} mr-7`} /> {select}</p>
               </div>
