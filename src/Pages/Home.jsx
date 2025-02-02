@@ -1,11 +1,10 @@
 import PropTypes from "prop-types";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Context } from "../App";
 import { Card } from "../components/shared/Cards/Card";
 
 export const Home = () => {
   const { data } = useContext(Context);
-
   return (
     <main className={data.length < 1 ? "-full h-[87vh] flex items-center" : "grid w-full h-[87vh] p-10 grid-cols-[repeat(auto-fill,_minmax(300px,_1fr))] gap-9 overflow-auto"}>
       {data.length < 1 ? 
@@ -19,6 +18,7 @@ export const Home = () => {
     </main>
   )
 }
+
 Home.propTypes = {
   data: PropTypes.object,
 };

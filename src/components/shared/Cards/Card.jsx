@@ -34,7 +34,7 @@ Card.propTypes = {
   url: PropTypes.string,
   title: PropTypes.string,
   description: PropTypes.string,
-  price: PropTypes.number,
+  price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   sales: PropTypes.number,
   select: PropTypes.string,
   setBuyCard: PropTypes.func,

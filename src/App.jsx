@@ -21,11 +21,12 @@ export function App() {
   const [buyCard, setBuyCard] = useState(false);
   const [data, setData] = useState([]);
   const [getOrder, setGetOrder] = useState([]);
+  const [inputType, setinputType] = useState('');
   const [productSold, setProductSold] = useState();
   const [callback, setCallback] = useState(JSON.parse(localStorage.getItem("callback")) || false)
   const [id, setId] = useState();
   const [dataInfo, setDataInfo] = useState();
-  const [buyApi, setBuyApi] = useState({ buyId: 0, buyUrl: '', buyTitle: '', buyDescription: '', buyPrice: 0, buySelect: '',buySales: 0 });
+  const [buyApi, setBuyApi] = useState({ buyId: 0, buyUrl: '', buyTitle: '', buyDescription: '', buyPrice: 0, buySelect: '', buySales: 0 });
   const [values, setValues] = useState({
     id: id,
     title: '',
@@ -42,12 +43,22 @@ export function App() {
 
   function Fetch() {
     axios.get('book')
-      .then(({ data }) => { setData(data) })
+      .then(({ data }) => {
+        if (!inputType) {
+          setData(data);
+        } else {
+          const filteredData = data.filter(book =>
+            book.title.toLowerCase().includes(inputType.toLowerCase())
+          );
+          setData(filteredData);
+        }
+      })
       .catch((err) => { console.log(err) });
   }
+
   useEffect(() => {
     Fetch()
-  }, [])
+  }, [inputType])
 
   useEffect(() => {
     setData((data) => data.filter((item) => item.id != id))
@@ -64,9 +75,8 @@ export function App() {
   }, [])
 
 
-
   return (
-    <Context.Provider value={{ data, NewBook, setNewBook, UserData, setUserData, edit, setEdit, setId, dataInfo, setDataInfo, values, setValues, setData, Fetch, buyCard, setBuyCard, buyApi, setBuyApi, callback, setCallback, getOrder, SoldOrder, productSold, setProductSold }}>
+    <Context.Provider value={{ data, inputType, setinputType, NewBook, setNewBook, UserData, setUserData, edit, setEdit, setId, dataInfo, setDataInfo, values, setValues, setData, Fetch, buyCard, setBuyCard, buyApi, setBuyApi, callback, setCallback, getOrder, SoldOrder, productSold, setProductSold }}>
       <ModalNewBook />
       <BuyCard />
       <div className="flex w-screen max-h-screen items-start">
